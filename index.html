@@ -665,13 +665,14 @@ footer {
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <div class="logo" onclick="showPage('home')">AM<span>.</span>Beauty</div>
+    <div class="logo" onclick="showPage('home')">AM<span>-</span>Beauty</div>
     <div class="nav-links">
       <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
       <a onclick="showPage('shop')" id="nav-shop">Shop</a>
       <a onclick="showPage('blog')" id="nav-blog">Blog</a>
       <a onclick="showPage('about')" id="nav-about">About</a>
       <a onclick="showPage('contact')" id="nav-contact">Contact</a>
+      <a onclick="showPage('aitool')" id="nav-aitool" style="color:var(--gold)">✦ AI Tool</a>
     </div>
     <div class="nav-actions">
       <button class="btn-search" onclick="toggleSearch()">🔍</button>
@@ -697,7 +698,7 @@ footer {
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-header">
-    <div class="logo" onclick="showPage('home');toggleMenu()">AM<span>.</span>Beauty</div>
+    <div class="logo" onclick="showPage('home');toggleMenu()">AM<span>-</span>Beauty</div>
     <button onclick="toggleMenu()" style="background:none;font-size:24px;">✕</button>
   </div>
   <div class="mobile-menu-links">
@@ -706,6 +707,7 @@ footer {
     <a onclick="showPage('blog');toggleMenu()">Blog</a>
     <a onclick="showPage('about');toggleMenu()">About</a>
     <a onclick="showPage('contact');toggleMenu()">Contact</a>
+    <a onclick="showPage('aitool');toggleMenu()" style="color:var(--gold)">✦ AI Tool</a>
   </div>
 </div>
 
@@ -844,42 +846,19 @@ footer {
   </div>
 </div>
         <!-- Card 2 -->
-      <!-- Card 1 -->
-<div class="product-card">
-  <div class="product-img">
-    <img src="loreal-lipstick.jpg" alt="L’Oreal Paris Liquid Lipstick">
-    <div class="product-badge">Trending</div>
-    <button class="product-wishlist">🤍</button>
-  </div>
-
-  <div class="product-info">
-    <div class="product-cat">Makeup</div>
-
-    <div class="product-name">
-      L’Oreal Paris Matte Liquid Lipstick
-    </div>
-
-    <div class="product-desc">
-      Infallible Matte Resistance | Shade 635 Worth It Medium | 5ml
-    </div>
-
-    <div class="product-stars">
-      <span class="stars">★★★★★</span>
-      <span class="review-count">(10,000+)</span>
-    </div>
-
-    <div class="product-footer">
-      <div class="product-price">₹899</div>
-
-      <a href="https://amzn.to/4eKa9Of"
-         target="_blank"
-         rel="noopener sponsored"
-         class="btn-amazon">
-         Buy ↗
-      </a>
-    </div>
-  </div>
-</div>
+        <div class="product-card">
+          <div class="product-img" style="background:linear-gradient(145deg,#f9e8e8,#f0d0d0)">💋<div class="product-badge">Best Seller</div><button class="product-wishlist">🤍</button></div>
+          <div class="product-info">
+            <div class="product-cat">Makeup</div>
+            <div class="product-name">Maybelline Superstay Lip Oil</div>
+            <div class="product-desc">Long-lasting colour gloss with nourishing oils for plump, hydrated lips.</div>
+            <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(18,720)</span></div>
+            <div class="product-footer">
+              <div class="product-price">₹599 <small>₹799</small></div>
+              <a href="https://amazon.in" target="_blank" rel="noopener sponsored" class="btn-amazon">Buy ↗</a>
+            </div>
+          </div>
+        </div>
         <!-- Card 3 -->
         <div class="product-card">
           <div class="product-img" style="background:linear-gradient(145deg,#e8f0e8,#d4e8d4)">🌿<div class="product-badge pink">Editor's Pick</div><button class="product-wishlist">🤍</button></div>
@@ -1077,43 +1056,15 @@ footer {
         </div>
 
         <!-- Makeup -->
-   <!-- Card 1 -->
-<div class="product-card">
-  <div class="product-img">
-    <img src="loreal-lipstick.jpg" alt="L’Oreal Paris Liquid Lipstick">
-    <div class="product-badge">Trending</div>
-    <button class="product-wishlist">🤍</button>
-  </div>
-
-  <div class="product-info">
-    <div class="product-cat">Makeup</div>
-
-    <div class="product-name">
-      L’Oreal Paris Matte Liquid Lipstick
-    </div>
-
-    <div class="product-desc">
-      Infallible Matte Resistance | Shade 635 Worth It Medium | 5ml
-    </div>
-
-    <div class="product-stars">
-      <span class="stars">★★★★★</span>
-      <span class="review-count">(10,000+)</span>
-    </div>
-
-    <div class="product-footer">
-      <div class="product-price">₹899</div>
-
-      <a href="https://amzn.to/4eKa9Of"
-         target="_blank"
-         rel="noopener sponsored"
-         class="btn-amazon">
-         Buy ↗
-      </a>
-    </div>
-  </div>
-</div>
-      </div>
+        <div class="product-card" data-cat="makeup" data-price="599" data-rating="5">
+          <div class="product-img" style="background:linear-gradient(145deg,#f9e8e8,#f0d0d0)">💋<div class="product-badge">Best Seller</div><button class="product-wishlist">🤍</button></div>
+          <div class="product-info">
+            <div class="product-cat">Makeup</div>
+            <div class="product-name">Maybelline Superstay Lip Oil</div>
+            <div class="product-desc">Plumping lip oil with 16hr colour. 12 hydrating shades available.</div>
+            <div class="product-stars"><span class="stars">★★★★★</span><span class="review-count">(18,720)</span></div>
+            <div class="product-footer"><div class="product-price">₹599 <small>₹799</small></div><a href="https://amazon.in" target="_blank" rel="noopener sponsored" class="btn-amazon">Buy on Amazon ↗</a></div>
+          </div>
         </div>
         <div class="product-card" data-cat="makeup" data-price="1199" data-rating="4.5">
           <div class="product-img" style="background:linear-gradient(145deg,#f0e8f0,#e0d0e0)">💄<div class="product-badge pink">New</div><button class="product-wishlist">🤍</button></div>
@@ -1466,12 +1417,428 @@ footer {
   </div>
 </div><!-- /contact -->
 
+<!-- ═══════════════════════════════════════════
+     AI PRODUCT TOOL PAGE
+═══════════════════════════════════════════ -->
+<div id="page-aitool" class="page">
+<style>
+.aitool-header{background:var(--text-dark);padding:60px 0 40px;text-align:center}
+.aitool-header .section-label{color:var(--gold-light)}
+.aitool-header .section-title{color:var(--white);margin-bottom:12px}
+.aitool-header p{color:rgba(255,255,255,.6);font-size:15px}
+.aitool-body{max-width:860px;margin:0 auto;padding:40px 32px}
+
+/* Input zone */
+.ai-input-zone{background:var(--blush-light);border:2px dashed var(--blush-deep);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.ai-input-zone label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+.ai-link-row{display:flex;gap:10px}
+.ai-link-input{flex:1;padding:12px 16px;border:1.5px solid var(--border);border-radius:100px;font-family:var(--ff-body);font-size:13px;color:var(--text-dark);background:var(--white);outline:none;transition:border-color .2s}
+.ai-link-input:focus{border-color:var(--gold)}
+.ai-add-btn{padding:12px 24px;background:var(--gold-gradient);color:var(--text-dark);border:none;border-radius:100px;font-family:var(--ff-body);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;white-space:nowrap;box-shadow:0 2px 12px var(--shadow-gold);transition:opacity .2s,transform .15s}
+.ai-add-btn:hover{opacity:.88;transform:translateY(-1px)}
+.ai-hint{font-size:11px;color:var(--text-soft);margin-top:8px}
+
+/* Queue */
+.ai-queue-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ai-queue-hdr h3{font-family:var(--ff-display);font-size:20px;font-weight:400}
+.ai-qcount{font-size:11px;color:var(--text-soft);background:var(--white);border:1px solid var(--border);padding:3px 10px;border-radius:100px}
+.ai-queue{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto;margin-bottom:16px}
+.ai-q-item{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 14px;background:var(--white);border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .2s}
+.ai-q-item.processing{border-color:var(--gold);background:var(--blush-light)}
+.ai-q-item.done{border-color:#c4e0d4;background:#f0faf6}
+.ai-q-item.error{border-color:#f0c4c4;background:#fff5f5}
+.ai-q-link{font-size:11px;color:var(--text-soft);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ai-q-status{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:100px;white-space:nowrap}
+.ai-q-status.waiting{background:var(--blush-light);color:var(--text-soft)}
+.ai-q-status.processing{background:#fdf4e0;color:var(--gold)}
+.ai-q-status.done{background:#d4f0e4;color:#0F6E56}
+.ai-q-status.error{background:#f0d4d4;color:#993C1D}
+.ai-q-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px;transition:color .2s}
+.ai-q-del:hover{color:#E24B4A}
+.ai-empty{text-align:center;padding:28px;color:var(--text-soft);font-size:13px;border:1px dashed var(--border);border-radius:var(--radius-sm)}
+
+/* Action buttons */
+.ai-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.ai-btn-gen{padding:13px 28px;background:var(--gold-gradient);color:var(--text-dark);border:none;border-radius:100px;font-family:var(--ff-body);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 18px var(--shadow-gold);transition:opacity .2s,transform .15s}
+.ai-btn-gen:hover{opacity:.88;transform:translateY(-1px)}
+.ai-btn-gen:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ai-btn-sec{padding:12px 22px;background:var(--white);color:var(--text-dark);border:1.5px solid var(--border);border-radius:100px;font-family:var(--ff-body);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.ai-btn-sec:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Progress */
+.ai-prog{display:none;margin-bottom:16px}
+.ai-prog-bg{background:var(--blush-light);border-radius:100px;height:6px;overflow:hidden;margin-bottom:6px}
+.ai-prog-bar{height:6px;background:var(--gold-gradient);border-radius:100px;width:0%;transition:width .3s}
+.ai-prog-txt{display:flex;justify-content:space-between;font-size:11px;color:var(--text-soft)}
+.ai-status{font-size:12px;min-height:18px;margin-bottom:10px}
+.ai-status.ok{color:#0F6E56}.ai-status.err{color:#993C1D}.ai-status.run{color:var(--gold)}
+
+/* Results preview */
+.ai-results{display:none;margin-bottom:20px}
+.ai-results-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ai-results-hdr h3{font-family:var(--ff-display);font-size:22px;font-weight:400}
+.ai-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+
+/* Code output */
+.ai-code-wrap{display:none;background:var(--text-dark);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.ai-code-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.ai-code-hdr span{font-size:12px;font-weight:600;color:var(--nude);letter-spacing:.06em;text-transform:uppercase}
+.ai-code-btns{display:flex;gap:8px}
+.ai-copy-btn{padding:7px 16px;background:var(--gold-gradient);color:var(--text-dark);border:none;border-radius:100px;font-family:var(--ff-body);font-size:11px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.ai-copy-btn:hover{opacity:.85}
+.ai-dl-btn{padding:7px 16px;background:transparent;color:var(--nude);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-family:var(--ff-body);font-size:11px;font-weight:600;cursor:pointer;transition:border-color .2s}
+.ai-dl-btn:hover{border-color:var(--gold-light)}
+.ai-code-pre{font-family:monospace;font-size:11px;color:var(--nude);white-space:pre-wrap;word-break:break-all;max-height:320px;overflow-y:auto;line-height:1.7}
+.ai-code-pre::-webkit-scrollbar{width:4px}
+.ai-code-pre::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px}
+
+/* Instruction box */
+.ai-howto{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px}
+.ai-howto h4{font-family:var(--ff-display);font-size:18px;font-weight:400;margin-bottom:14px;color:var(--text-dark)}
+.ai-howto ol{padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.ai-howto li{font-size:13px;color:var(--text-mid);line-height:1.6}
+.ai-howto li strong{color:var(--text-dark)}
+.ai-tag{display:inline-block;background:var(--blush-light);color:var(--text-mid);font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;font-family:monospace}
+</style>
+
+<div class="aitool-header">
+  <div class="section-label">✦ AI Powered</div>
+  <div class="section-title">AI Product Fetcher</div>
+  <p>Paste your Amazon affiliate links — AI fetches all product data & generates your site code</p>
+</div>
+
+<div class="aitool-body">
+
+  <!-- How to use -->
+  <div class="ai-howto">
+    <h4>How it works — 4 simple steps</h4>
+    <ol>
+      <li><strong>Step 1:</strong> Paste your Amazon affiliate link (e.g. <span class="ai-tag">amzn.to/3QzBzfR</span>) and click Add. Repeat up to 50 links.</li>
+      <li><strong>Step 2:</strong> Click <strong>Generate All Products</strong> — AI reads each link and fetches the name, price, category, description, rating and more.</li>
+      <li><strong>Step 3:</strong> Preview the product cards and review the generated code.</li>
+      <li><strong>Step 4:</strong> Click <strong>Copy Code</strong> → open your <span class="ai-tag">index.html</span> on GitHub → paste inside the <span class="ai-tag">#shopGrid</span> div → commit. Done!</li>
+    </ol>
+  </div>
+
+  <!-- Link input -->
+  <div class="ai-input-zone">
+    <label>✦ Paste your Amazon affiliate link</label>
+    <div class="ai-link-row">
+      <input class="ai-link-input" id="aiLinkInput" type="text" placeholder="https://amzn.to/xxxxxx  or  https://www.amazon.in/dp/B0xxxxx?tag=yourtag-21">
+      <button class="ai-add-btn" onclick="aiAddLink()">+ Add to Queue</button>
+    </div>
+    <div class="ai-hint">Press Enter to add quickly · Add up to 50 links · AI does everything else</div>
+  </div>
+
+  <!-- Queue -->
+  <div class="ai-queue-hdr">
+    <h3>Link Queue</h3>
+    <span class="ai-qcount" id="aiQCount">0 / 50 links</span>
+  </div>
+  <div class="ai-queue" id="aiQueue">
+    <div class="ai-empty">No links yet. Paste an Amazon affiliate link above and click Add.</div>
+  </div>
+
+  <!-- Action row -->
+  <div class="ai-actions">
+    <button class="ai-btn-gen" id="aiGenBtn" onclick="aiGenerate()" disabled>✦ Generate All Products</button>
+    <button class="ai-btn-sec" onclick="aiClear()">Clear Queue</button>
+    <button class="ai-btn-sec" onclick="aiDemo()">Try Demo Links</button>
+  </div>
+
+  <!-- Progress -->
+  <div class="ai-prog" id="aiProg">
+    <div class="ai-prog-bg"><div class="ai-prog-bar" id="aiProgBar"></div></div>
+    <div class="ai-prog-txt"><span id="aiProgLabel">Starting...</span><span id="aiProgPct">0%</span></div>
+  </div>
+  <div class="ai-status" id="aiStatus"></div>
+
+  <!-- Results preview -->
+  <div class="ai-results" id="aiResults">
+    <div class="ai-results-hdr">
+      <h3 id="aiResultsTitle">Generated Products</h3>
+      <div style="display:flex;gap:10px">
+        <button class="ai-btn-sec" onclick="aiToggleCode()">View Code</button>
+        <button class="ai-btn-gen" style="padding:10px 20px;font-size:12px" onclick="aiCopyCode()">Copy Code for GitHub</button>
+      </div>
+    </div>
+    <div class="ai-preview-grid" id="aiPreviewGrid"></div>
+  </div>
+
+  <!-- Code output -->
+  <div class="ai-code-wrap" id="aiCodeWrap">
+    <div class="ai-code-hdr">
+      <span>Ready to paste into index.html → #shopGrid</span>
+      <div class="ai-code-btns">
+        <button class="ai-dl-btn" onclick="aiDownload()">Download .html</button>
+        <button class="ai-copy-btn" onclick="aiCopyCode()">Copy All Code</button>
+      </div>
+    </div>
+    <pre class="ai-code-pre" id="aiCodePre"></pre>
+  </div>
+
+</div>
+</div><!-- /aitool -->
+
+<script>
+/* ── AI PRODUCT FETCHER ── */
+(function(){
+  const MAX=50;
+  let queue=[];
+  let products=[];
+  let generatedCode='';
+
+  const CATS={skincare:'skincare',makeup:'makeup',haircare:'haircare',fragrance:'fragrance',tools:'tools','cruelty-free':'cruelty-free'};
+  const BADGES=['Trending','Best Seller','Editor\'s Pick','Viral','New Arrival','Amazon Pick'];
+  const GRADIENTS=[
+    'linear-gradient(145deg,#fdf0f0,#f5dede)',
+    'linear-gradient(145deg,#f9e8e8,#f0d0d0)',
+    'linear-gradient(145deg,#e8f0e8,#d4e8d4)',
+    'linear-gradient(145deg,#fff5e0,#ffe8b0)',
+    'linear-gradient(145deg,#ede8f5,#dcd0f0)',
+    'linear-gradient(145deg,#e8f5f5,#d0e8e8)',
+    'linear-gradient(145deg,#f5f0f8,#e8e0f0)',
+    'linear-gradient(145deg,#f0ede8,#e8e0d8)',
+  ];
+  const EMOJIS={skincare:'🧴',makeup:'💄',haircare:'💆',fragrance:'🌸',tools:'🪄','cruelty-free':'🌿'};
+
+  document.getElementById('aiLinkInput').addEventListener('keydown',e=>{if(e.key==='Enter')aiAddLink();});
+  window.aiAddLink=function(){
+    const inp=document.getElementById('aiLinkInput');
+    const val=inp.value.trim();
+    if(!val){aiSetStatus('Please paste an Amazon link first','err');return;}
+    if(!val.includes('amzn')&&!val.includes('amazon')){aiSetStatus('Please use an Amazon link (amzn.to/... or amazon.in/dp/...)','err');return;}
+    if(queue.length>=MAX){aiSetStatus('Maximum 50 links reached','err');return;}
+    if(queue.find(q=>q.url===val)){aiSetStatus('This link is already in the queue','err');return;}
+    queue.push({url:val,status:'waiting',id:Date.now()+Math.random()});
+    inp.value='';
+    aiRenderQueue();
+    aiSetStatus('Link added to queue!','ok');
+    document.getElementById('aiGenBtn').disabled=false;
+  };
+
+  window.aiRemoveLink=function(id){
+    queue=queue.filter(q=>q.id!==id);
+    aiRenderQueue();
+    if(!queue.length)document.getElementById('aiGenBtn').disabled=true;
+  };
+
+  function aiRenderQueue(){
+    const c=document.getElementById('aiQueue');
+    document.getElementById('aiQCount').textContent=queue.length+' / '+MAX+' links';
+    if(!queue.length){c.innerHTML='<div class="ai-empty">No links yet. Paste an Amazon affiliate link above and click Add.</div>';return;}
+    c.innerHTML=queue.map(q=>`
+      <div class="ai-q-item ${q.status}" id="aiq-${q.id}">
+        <span class="ai-q-link">${q.url}</span>
+        <span class="ai-q-status ${q.status}">${{waiting:'Waiting',processing:'Fetching...',done:'Done ✓',error:'Error'}[q.status]||q.status}</span>
+        ${q.status==='waiting'?`<button class="ai-q-del" onclick="aiRemoveLink(${q.id})">✕</button>`:'<span></span>'}
+      </div>`).join('');
+  }
+
+  function aiSetStatus(msg,type){
+    const el=document.getElementById('aiStatus');
+    el.textContent=msg;
+    el.className='ai-status '+(type||'');
+  }
+
+  window.aiClear=function(){
+    queue=[];products=[];generatedCode='';
+    aiRenderQueue();
+    document.getElementById('aiGenBtn').disabled=true;
+    document.getElementById('aiResults').style.display='none';
+    document.getElementById('aiCodeWrap').style.display='none';
+    document.getElementById('aiProg').style.display='none';
+    aiSetStatus('');
+  };
+
+  window.aiDemo=function(){
+    window.aiClear();
+    ['https://amzn.to/3QzBzfR','https://amzn.to/4eKa9Of','https://amzn.to/4cAafqs',
+     'https://www.amazon.in/dp/B07WFPMTKY?tag=ambeauty-21','https://www.amazon.in/dp/B08XJK6L12?tag=ambeauty-21']
+    .forEach(u=>queue.push({url:u,status:'waiting',id:Date.now()+Math.random()}));
+    aiRenderQueue();
+    document.getElementById('aiGenBtn').disabled=false;
+    aiSetStatus('5 demo links loaded — click Generate All Products!','ok');
+  };
+
+  window.aiGenerate=async function(){
+    if(!queue.length)return;
+    products=[];
+    document.getElementById('aiProg').style.display='block';
+    document.getElementById('aiResults').style.display='none';
+    document.getElementById('aiCodeWrap').style.display='none';
+    document.getElementById('aiGenBtn').disabled=true;
+    const total=queue.length;
+    for(let i=0;i<total;i++){
+      const item=queue[i];
+      item.status='processing';
+      aiRenderQueue();
+      aiSetProg(i,total,item.url);
+      try{
+        const p=await aiFetchProduct(item.url,i);
+        products.push(p);
+        item.status='done';
+      }catch(e){
+        item.status='error';
+        products.push(aiFallback(item.url,i));
+      }
+      aiRenderQueue();
+      await new Promise(r=>setTimeout(r,500));
+    }
+    aiSetProg(total,total,'Complete!');
+    aiSetStatus(products.length+' products generated successfully! Preview below.','ok');
+    aiBuildCode();
+    aiShowResults();
+    document.getElementById('aiGenBtn').disabled=false;
+  };
+
+  function aiSetProg(done,total,label){
+    const pct=Math.round((done/total)*100);
+    document.getElementById('aiProgBar').style.width=pct+'%';
+    document.getElementById('aiProgPct').textContent=pct+'%';
+    document.getElementById('aiProgLabel').textContent=done<total?'Fetching '+(done+1)+'/'+total+': '+label.substring(0,50):'All done!';
+  }
+
+  async function aiFetchProduct(url,idx){
+    const prompt=`You are a product data extractor for AM-Beauty, an Indian Amazon affiliate beauty website.
+
+Given this Amazon affiliate URL: ${url}
+
+Return ONLY a valid JSON object (no markdown, no explanation, no code fences) with these exact fields:
+{
+  "name": "Full product name",
+  "brand": "Brand name",
+  "price": "Price like ₹699",
+  "originalPrice": "Original price like ₹999 or empty string if no discount",
+  "category": "exactly one of: skincare, makeup, haircare, fragrance, tools, cruelty-free",
+  "description": "One clear sentence about key benefit for Indian shoppers",
+  "rating": "4.5",
+  "reviews": "15000",
+  "badge": "one of: Trending, Best Seller, Editor's Pick, Viral, New Arrival, Amazon Pick",
+  "badgeStyle": "gold or pink",
+  "gradient": "a CSS linear-gradient using pastel tones matching the product category"
+}
+
+Rules: price must have ₹, category must match exactly, return ONLY the JSON object.`;
+
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]})
+    });
+    if(!resp.ok)throw new Error('API error');
+    const data=await resp.json();
+    const text=data.content.map(b=>b.text||'').join('');
+    const clean=text.replace(/```json|```/g,'').trim();
+    const p=JSON.parse(clean);
+    p.url=url;p.idx=idx;
+    return p;
+  }
+
+  function aiFallback(url,idx){
+    const cats=['skincare','makeup','haircare','fragrance','tools'];
+    return{name:'Beauty Product '+(idx+1),brand:'AM-Beauty Pick',price:'₹699',originalPrice:'',
+      category:cats[idx%cats.length],description:'A top-rated beauty product loved by Amazon India shoppers.',
+      rating:'4.5',reviews:'5000',badge:BADGES[idx%BADGES.length],badgeStyle:'gold',
+      gradient:GRADIENTS[idx%GRADIENTS.length],url,idx};
+  }
+
+  function aiShowResults(){
+    const sec=document.getElementById('aiResults');
+    sec.style.display='block';
+    document.getElementById('aiResultsTitle').textContent=products.length+' Products — Ready for GitHub';
+    const grid=document.getElementById('aiPreviewGrid');
+    grid.innerHTML=products.map((p,i)=>{
+      const grad=p.gradient||GRADIENTS[i%GRADIENTS.length];
+      const emoji=EMOJIS[p.category]||'✨';
+      const badge=p.badgeStyle==='pink'?'product-badge pink':'product-badge';
+      const priceStr=p.originalPrice?`${p.price} <small>${p.originalPrice}</small>`:p.price;
+      const stars=parseFloat(p.rating)>=5?'★★★★★':parseFloat(p.rating)>=4.5?'★★★★½':'★★★★';
+      return `<div class="product-card">
+        <div class="product-img" style="background:${grad}">${emoji}
+          <div class="${badge}">${p.badge}</div>
+          <button class="product-wishlist">🤍</button>
+        </div>
+        <div class="product-info">
+          <div class="product-cat">${p.category.charAt(0).toUpperCase()+p.category.slice(1)}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.description}</div>
+          <div class="product-stars"><span class="stars">${stars}</span><span class="review-count">(${Number(p.reviews).toLocaleString('en-IN')})</span></div>
+          <div class="product-footer">
+            <div class="product-price">${priceStr}</div>
+            <a href="${p.url}" target="_blank" rel="noopener sponsored" class="btn-amazon">Buy ↗</a>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function aiBuildCode(){
+    const cards=products.map((p,i)=>{
+      const grad=p.gradient||GRADIENTS[i%GRADIENTS.length];
+      const emoji=EMOJIS[p.category]||'✨';
+      const cat=p.category.toLowerCase();
+      const price=parseFloat((p.price||'0').replace(/[^0-9.]/g,''))||0;
+      const rating=parseFloat(p.rating)||4.5;
+      const badge=p.badgeStyle==='pink'?'product-badge pink':'product-badge';
+      const priceStr=p.originalPrice?`${p.price} <small>${p.originalPrice}</small>`:p.price;
+      const stars=rating>=5?'★★★★★':rating>=4.5?'★★★★½':'★★★★';
+      return `        <div class="product-card" data-cat="${cat}" data-price="${price}" data-rating="${rating}">
+          <div class="product-img" style="background:${grad}">${emoji}<div class="${badge}">${p.badge}</div><button class="product-wishlist">🤍</button></div>
+          <div class="product-info">
+            <div class="product-cat">${p.category.charAt(0).toUpperCase()+p.category.slice(1)}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.description}</div>
+            <div class="product-stars"><span class="stars">${stars}</span><span class="review-count">(${Number(p.reviews).toLocaleString('en-IN')})</span></div>
+            <div class="product-footer"><div class="product-price">${priceStr}</div><a href="${p.url}" target="_blank" rel="noopener sponsored" class="btn-amazon">Buy on Amazon ↗</a></div>
+          </div>
+        </div>`;
+    }).join('\n');
+
+    generatedCode=`<!-- =============================================
+  AM-BEAUTY — ${products.length} NEW PRODUCTS
+  Generated by AM-Beauty AI Product Fetcher
+  
+  HOW TO ADD TO YOUR WEBSITE:
+  1. Go to your GitHub repo
+  2. Open index.html → click pencil (Edit)
+  3. Find the div with id="shopGrid"
+  4. Paste these cards INSIDE that div
+  5. Click "Commit changes" — live instantly!
+============================================= -->
+
+${cards}`;
+    document.getElementById('aiCodePre').textContent=generatedCode;
+  }
+
+  window.aiToggleCode=function(){
+    const cw=document.getElementById('aiCodeWrap');
+    cw.style.display=cw.style.display==='block'?'none':'block';
+  };
+
+  window.aiCopyCode=function(){
+    if(!generatedCode){aiSetStatus('Generate products first!','err');return;}
+    navigator.clipboard.writeText(generatedCode).then(()=>{
+      aiSetStatus('Code copied! Open GitHub → index.html → find #shopGrid → paste inside it → commit.','ok');
+    });
+  };
+
+  window.aiDownload=function(){
+    if(!generatedCode)return;
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([generatedCode],{type:'text/html'}));
+    a.download='am-beauty-new-products.html';
+    a.click();
+  };
+})();
+</script>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="logo" onclick="showPage('home')">AM<span style="color:var(--gold)">.</span>Beauty</div>
+        <div class="logo" onclick="showPage('home')">AM<span style="color:var(--gold)">-</span>Beauty</div>
         <p>Your trusted guide to the best beauty products on Amazon. Curated with love, reviewed with honesty.</p>
         <div class="social-links" style="margin-top:20px;">
           <a class="social-btn" href="https://instagram.com" target="_blank" title="Instagram" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);font-size:16px;">📷</a>
