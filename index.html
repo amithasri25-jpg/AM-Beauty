@@ -1524,10 +1524,10 @@ footer {
   <div class="ai-input-zone">
     <label>✦ Paste your Amazon affiliate link</label>
     <div class="ai-link-row">
-      <input class="ai-link-input" id="aiLinkInput" type="text" placeholder="https://amzn.to/xxxxxx  or  https://www.amazon.in/dp/B0xxxxx?tag=yourtag-21">
+      <input class="ai-link-input" id="aiLinkInput" type="text" placeholder="https://www.amazon.in/dp/B0XXXXXXXXX?tag=yourtag-21">
       <button class="ai-add-btn" onclick="aiAddLink()">+ Add to Queue</button>
     </div>
-    <div class="ai-hint">Press Enter to add quickly · Add up to 50 links · AI does everything else</div>
+    <div class="ai-hint">⚠ Use full Amazon link with /dp/ASIN — Real image, price &amp; rating fetched automatically!</div>
   </div>
 
   <!-- Queue -->
@@ -1581,15 +1581,17 @@ footer {
 </div><!-- /aitool -->
 
 <script>
-/* ── AI PRODUCT FETCHER ── */
+/* ── AI PRODUCT FETCHER — REAL AMAZON DATA via RapidAPI ── */
 (function(){
   const MAX=50;
   let queue=[];
   let products=[];
   let generatedCode='';
 
-  const CATS={skincare:'skincare',makeup:'makeup',haircare:'haircare',fragrance:'fragrance',tools:'tools','cruelty-free':'cruelty-free'};
-  const BADGES=['Trending','Best Seller','Editor\'s Pick','Viral','New Arrival','Amazon Pick'];
+  // ── RapidAPI Key ──
+  const RAPIDAPI_KEY='d17bf5656dmsh0909e543bbeabc3p183a7bjsn27d46a12744f';
+  const RAPIDAPI_HOST='real-time-amazon-data.p.rapidapi.com';
+
   const GRADIENTS=[
     'linear-gradient(145deg,#fdf0f0,#f5dede)',
     'linear-gradient(145deg,#f9e8e8,#f0d0d0)',
@@ -1600,9 +1602,69 @@ footer {
     'linear-gradient(145deg,#f5f0f8,#e8e0f0)',
     'linear-gradient(145deg,#f0ede8,#e8e0d8)',
   ];
-  const EMOJIS={skincare:'🧴',makeup:'💄',haircare:'💆',fragrance:'🌸',tools:'🪄','cruelty-free':'🌿'};
+  const BADGES=['Trending','Best Seller','Editor\'s Pick','Viral','New Arrival','Amazon Pick'];
+  const CAT_KEYWORDS={
+    skincare:['serum','moisturizer','cleanser','toner','sunscreen','spf','face wash','cream','lotion','vitamin c','retinol','hyaluronic','niacinamide','cerave','the ordinary','minimalist','skin'],
+    makeup:['lipstick','foundation','mascara','eyeliner','blush','concealer','primer','eyeshadow','lip','kajal','makeup','maybelline','loreal','lakme'],
+    haircare:['shampoo','conditioner','hair oil','hair mask','hair serum','scalp','dyson','hair','keratin'],
+    fragrance:['perfume','fragrance','deodorant','body spray','eau de'],
+    tools:['brush','sponge','roller','gua sha','device','tool','massager','curler','straightener','trimmer']
+  };
+
+  // Extract ASIN from Amazon URL
+  function extractASIN(url){
+    const patterns=[
+      /\/dp\/([A-Z0-9]{10})/,
+      /\/gp\/product\/([A-Z0-9]{10})/,
+      /asin=([A-Z0-9]{10})/,
+      /amzn\.to\/([A-Za-z0-9]+)/
+    ];
+    for(const p of patterns){
+      const m=url.match(p);
+      if(m)return m[1];
+    }
+    return null;
+  }
+
+  // Detect country from URL
+  function detectCountry(url){
+    if(url.includes('amazon.in'))return'IN';
+    if(url.includes('amazon.co.uk'))return'GB';
+    if(url.includes('amazon.de'))return'DE';
+    return'IN'; // default India for your site
+  }
+
+  // Guess category from product title/description
+  function guessCategory(title,desc){
+    const text=(title+' '+desc).toLowerCase();
+    for(const[cat,keywords]of Object.entries(CAT_KEYWORDS)){
+      if(keywords.some(k=>text.includes(k)))return cat;
+    }
+    return'skincare';
+  }
+
+  // Format price with ₹
+  function formatPrice(price,currency){
+    if(!price)return'₹699';
+    const num=parseFloat(String(price).replace(/[^0-9.]/g,''));
+    if(isNaN(num))return'₹699';
+    if(currency==='INR'||currency==='₹')return'₹'+num.toLocaleString('en-IN');
+    // Convert USD to INR roughly
+    if(currency==='USD'||String(price).includes('$'))return'₹'+Math.round(num*83).toLocaleString('en-IN');
+    return'₹'+num.toLocaleString('en-IN');
+  }
+
+  // Stars display
+  function starsDisplay(rating){
+    const r=parseFloat(rating)||4.5;
+    if(r>=5)return'★★★★★';
+    if(r>=4.5)return'★★★★½';
+    if(r>=4)return'★★★★';
+    return'★★★½';
+  }
 
   document.getElementById('aiLinkInput').addEventListener('keydown',e=>{if(e.key==='Enter')aiAddLink();});
+
   window.aiAddLink=function(){
     const inp=document.getElementById('aiLinkInput');
     const val=inp.value.trim();
@@ -1613,7 +1675,7 @@ footer {
     queue.push({url:val,status:'waiting',id:Date.now()+Math.random()});
     inp.value='';
     aiRenderQueue();
-    aiSetStatus('Link added to queue!','ok');
+    aiSetStatus('Link added! Click Generate All Products when ready.','ok');
     document.getElementById('aiGenBtn').disabled=false;
   };
 
@@ -1630,7 +1692,7 @@ footer {
     c.innerHTML=queue.map(q=>`
       <div class="ai-q-item ${q.status}" id="aiq-${q.id}">
         <span class="ai-q-link">${q.url}</span>
-        <span class="ai-q-status ${q.status}">${{waiting:'Waiting',processing:'Fetching...',done:'Done ✓',error:'Error'}[q.status]||q.status}</span>
+        <span class="ai-q-status ${q.status}">${{waiting:'Waiting',processing:'Fetching from Amazon...',done:'Done ✓',error:'Error'}[q.status]||q.status}</span>
         ${q.status==='waiting'?`<button class="ai-q-del" onclick="aiRemoveLink(${q.id})">✕</button>`:'<span></span>'}
       </div>`).join('');
   }
@@ -1653,12 +1715,11 @@ footer {
 
   window.aiDemo=function(){
     window.aiClear();
-    ['https://amzn.to/3QzBzfR','https://amzn.to/4eKa9Of','https://amzn.to/4cAafqs',
-     'https://www.amazon.in/dp/B07WFPMTKY?tag=ambeauty-21','https://www.amazon.in/dp/B08XJK6L12?tag=ambeauty-21']
+    ['https://www.amazon.in/dp/B07WFPMTKY','https://www.amazon.in/dp/B08XJK6L12']
     .forEach(u=>queue.push({url:u,status:'waiting',id:Date.now()+Math.random()}));
     aiRenderQueue();
     document.getElementById('aiGenBtn').disabled=false;
-    aiSetStatus('5 demo links loaded — click Generate All Products!','ok');
+    aiSetStatus('Demo links loaded — click Generate All Products!','ok');
   };
 
   window.aiGenerate=async function(){
@@ -1675,20 +1736,23 @@ footer {
       aiRenderQueue();
       aiSetProg(i,total,item.url);
       try{
-        const p=await aiFetchProduct(item.url,i);
+        const p=await aiFetchRealProduct(item.url,i);
         products.push(p);
         item.status='done';
       }catch(e){
+        console.error('Fetch error:',e);
         item.status='error';
-        products.push(aiFallback(item.url,i));
+        aiSetStatus('Could not fetch product '+(i+1)+'. Check your link and try again.','err');
       }
       aiRenderQueue();
-      await new Promise(r=>setTimeout(r,500));
+      await new Promise(r=>setTimeout(r,600));
     }
     aiSetProg(total,total,'Complete!');
-    aiSetStatus(products.length+' products generated successfully! Preview below.','ok');
-    aiBuildCode();
-    aiShowResults();
+    if(products.length>0){
+      aiSetStatus(products.length+' real Amazon products fetched! Preview below.','ok');
+      aiBuildCode();
+      aiShowResults();
+    }
     document.getElementById('aiGenBtn').disabled=false;
   };
 
@@ -1696,51 +1760,92 @@ footer {
     const pct=Math.round((done/total)*100);
     document.getElementById('aiProgBar').style.width=pct+'%';
     document.getElementById('aiProgPct').textContent=pct+'%';
-    document.getElementById('aiProgLabel').textContent=done<total?'Fetching '+(done+1)+'/'+total+': '+label.substring(0,50):'All done!';
+    document.getElementById('aiProgLabel').textContent=done<total?'Fetching real data '+(done+1)+'/'+total+' from Amazon...':'All done!';
   }
 
-  async function aiFetchProduct(url,idx){
-    const prompt=`You are a product data extractor for AM-Beauty, an Indian Amazon affiliate beauty website.
+  async function aiFetchRealProduct(url,idx){
+    // Step 1: Extract ASIN
+    let asin=extractASIN(url);
+    const country=detectCountry(url);
 
-Given this Amazon affiliate URL: ${url}
+    // Step 2: If short link (amzn.to), resolve to get ASIN
+    if(!asin||asin.length<10){
+      // Try fetching via API search using the URL directly
+      throw new Error('Could not extract ASIN. Please use full Amazon link like: amazon.in/dp/B0XXXXXXXX');
+    }
 
-Return ONLY a valid JSON object (no markdown, no explanation, no code fences) with these exact fields:
-{
-  "name": "Full product name",
-  "brand": "Brand name",
-  "price": "Price like ₹699",
-  "originalPrice": "Original price like ₹999 or empty string if no discount",
-  "category": "exactly one of: skincare, makeup, haircare, fragrance, tools, cruelty-free",
-  "description": "One clear sentence about key benefit for Indian shoppers",
-  "rating": "4.5",
-  "reviews": "15000",
-  "badge": "one of: Trending, Best Seller, Editor's Pick, Viral, New Arrival, Amazon Pick",
-  "badgeStyle": "gold or pink",
-  "gradient": "a CSS linear-gradient using pastel tones matching the product category"
-}
-
-Rules: price must have ₹, category must match exactly, return ONLY the JSON object.`;
-
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]})
+    // Step 3: Call RapidAPI Real-Time Amazon Data
+    const apiUrl=`https://${RAPIDAPI_HOST}/product-details?asin=${asin}&country=${country}`;
+    const resp=await fetch(apiUrl,{
+      method:'GET',
+      headers:{
+        'x-rapidapi-key':RAPIDAPI_KEY,
+        'x-rapidapi-host':RAPIDAPI_HOST
+      }
     });
-    if(!resp.ok)throw new Error('API error');
-    const data=await resp.json();
-    const text=data.content.map(b=>b.text||'').join('');
-    const clean=text.replace(/```json|```/g,'').trim();
-    const p=JSON.parse(clean);
-    p.url=url;p.idx=idx;
-    return p;
-  }
 
-  function aiFallback(url,idx){
-    const cats=['skincare','makeup','haircare','fragrance','tools'];
-    return{name:'Beauty Product '+(idx+1),brand:'AM-Beauty Pick',price:'₹699',originalPrice:'',
-      category:cats[idx%cats.length],description:'A top-rated beauty product loved by Amazon India shoppers.',
-      rating:'4.5',reviews:'5000',badge:BADGES[idx%BADGES.length],badgeStyle:'gold',
-      gradient:GRADIENTS[idx%GRADIENTS.length],url,idx};
+    if(!resp.ok){
+      const errText=await resp.text();
+      throw new Error('API error: '+resp.status+' '+errText);
+    }
+
+    const json=await resp.json();
+    const d=json.data;
+    if(!d)throw new Error('No product data returned');
+
+    // Step 4: Extract real data
+    const title=d.product_title||'Beauty Product';
+    const price=d.product_price||d.product_original_price||'';
+    const originalPrice=d.product_original_price&&d.product_original_price!==d.product_price?d.product_original_price:'';
+    const rating=d.product_star_rating||'4.5';
+    const reviews=d.product_num_ratings||5000;
+    const photo=d.product_photo||(d.product_photos&&d.product_photos[0])||'';
+    const isBestSeller=d.is_best_seller||false;
+    const isAmazonChoice=d.is_amazon_choice||false;
+    const aboutProduct=Array.isArray(d.about_product)?d.about_product[0]:'';
+    const description=aboutProduct||d.product_description||'Top-rated product loved by shoppers.';
+    const shortDesc=description.substring(0,120)+(description.length>120?'...':'');
+
+    // Step 5: Determine badge
+    let badge='Trending';
+    let badgeStyle='gold';
+    if(isBestSeller){badge='Best Seller';badgeStyle='gold';}
+    else if(isAmazonChoice){badge='Amazon Pick';badgeStyle='gold';}
+    else if(parseFloat(rating)>=4.8){badge='Top Rated';badgeStyle='gold';}
+    else{badge=BADGES[idx%BADGES.length];}
+
+    // Step 6: Detect category
+    const category=guessCategory(title,shortDesc);
+
+    // Step 7: Format prices
+    const priceFormatted=formatPrice(price,'INR');
+    const originalFormatted=originalPrice?formatPrice(originalPrice,'INR'):'';
+
+    // Step 8: Gradient based on category
+    const catGradients={
+      skincare:'linear-gradient(145deg,#fdf0f0,#f5dede)',
+      makeup:'linear-gradient(145deg,#f9e8e8,#f0d0d0)',
+      haircare:'linear-gradient(145deg,#ede8f5,#dcd0f0)',
+      fragrance:'linear-gradient(145deg,#e8f5f5,#d0e8e8)',
+      tools:'linear-gradient(145deg,#fff5e0,#ffe8b0)'
+    };
+    const gradient=catGradients[category]||GRADIENTS[idx%GRADIENTS.length];
+
+    return{
+      name:title,
+      price:priceFormatted,
+      originalPrice:originalFormatted,
+      category,
+      description:shortDesc,
+      rating:String(rating),
+      reviews:String(reviews),
+      badge,
+      badgeStyle,
+      gradient,
+      photo,
+      url,
+      idx
+    };
   }
 
   function aiShowResults(){
@@ -1750,14 +1855,17 @@ Rules: price must have ₹, category must match exactly, return ONLY the JSON ob
     const grid=document.getElementById('aiPreviewGrid');
     grid.innerHTML=products.map((p,i)=>{
       const grad=p.gradient||GRADIENTS[i%GRADIENTS.length];
-      const emoji=EMOJIS[p.category]||'✨';
       const badge=p.badgeStyle==='pink'?'product-badge pink':'product-badge';
       const priceStr=p.originalPrice?`${p.price} <small>${p.originalPrice}</small>`:p.price;
-      const stars=parseFloat(p.rating)>=5?'★★★★★':parseFloat(p.rating)>=4.5?'★★★★½':'★★★★';
+      const stars=starsDisplay(p.rating);
+      // Use real photo if available, otherwise gradient background
+      const imgContent=p.photo
+        ?`<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">`
+        :'';
       return `<div class="product-card">
-        <div class="product-img" style="background:${grad}">${emoji}
-          <div class="${badge}">${p.badge}</div>
-          <button class="product-wishlist">🤍</button>
+        <div class="product-img" style="background:${grad};position:relative;">${imgContent}
+          <div class="${badge}" style="position:absolute;top:12px;left:12px;z-index:2;">${p.badge}</div>
+          <button class="product-wishlist" style="position:absolute;top:10px;right:10px;z-index:2;">🤍</button>
         </div>
         <div class="product-info">
           <div class="product-cat">${p.category.charAt(0).toUpperCase()+p.category.slice(1)}</div>
@@ -1776,15 +1884,18 @@ Rules: price must have ₹, category must match exactly, return ONLY the JSON ob
   function aiBuildCode(){
     const cards=products.map((p,i)=>{
       const grad=p.gradient||GRADIENTS[i%GRADIENTS.length];
-      const emoji=EMOJIS[p.category]||'✨';
       const cat=p.category.toLowerCase();
       const price=parseFloat((p.price||'0').replace(/[^0-9.]/g,''))||0;
       const rating=parseFloat(p.rating)||4.5;
       const badge=p.badgeStyle==='pink'?'product-badge pink':'product-badge';
       const priceStr=p.originalPrice?`${p.price} <small>${p.originalPrice}</small>`:p.price;
-      const stars=rating>=5?'★★★★★':rating>=4.5?'★★★★½':'★★★★';
+      const stars=starsDisplay(p.rating);
+      // Use real image if available
+      const imgHTML=p.photo
+        ?`<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">`
+        :'';
       return `        <div class="product-card" data-cat="${cat}" data-price="${price}" data-rating="${rating}">
-          <div class="product-img" style="background:${grad}">${emoji}<div class="${badge}">${p.badge}</div><button class="product-wishlist">🤍</button></div>
+          <div class="product-img" style="background:${grad};position:relative;">${imgHTML}<div class="${badge}" style="position:absolute;top:12px;left:12px;z-index:2;">${p.badge}</div><button class="product-wishlist" style="position:absolute;top:10px;right:10px;z-index:2;">🤍</button></div>
           <div class="product-info">
             <div class="product-cat">${p.category.charAt(0).toUpperCase()+p.category.slice(1)}</div>
             <div class="product-name">${p.name}</div>
@@ -1796,8 +1907,9 @@ Rules: price must have ₹, category must match exactly, return ONLY the JSON ob
     }).join('\n');
 
     generatedCode=`<!-- =============================================
-  AM-BEAUTY — ${products.length} NEW PRODUCTS
+  AM-BEAUTY — ${products.length} REAL AMAZON PRODUCTS
   Generated by AM-Beauty AI Product Fetcher
+  Real data fetched from Amazon via RapidAPI
   
   HOW TO ADD TO YOUR WEBSITE:
   1. Go to your GitHub repo
