@@ -1153,6 +1153,8 @@ footer {
           </div>
         </div>
 
+        <!-- ✦ PASTE YOUR AI-GENERATED PRODUCT CARDS BELOW THIS LINE ✦ -->
+
       </div>
     </div>
   </section>
@@ -2023,8 +2025,45 @@ function toggleSearch() {
 }
 function handleSearch(e) { if (e.key === 'Enter') performSearch(); }
 function performSearch() {
-  const q = document.getElementById('searchInput').value.trim();
-  if (q) { toggleSearch(); showPage('shop'); }
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) return;
+  toggleSearch();
+  showPage('shop');
+
+  // Reset category filter pills
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.cat-pill').classList.add('active'); // "All" pill
+
+  const cards = document.querySelectorAll('#shopGrid .product-card');
+  let count = 0;
+  cards.forEach(card => {
+    const name = (card.querySelector('.product-name')?.textContent || '').toLowerCase();
+    const cat  = (card.querySelector('.product-cat')?.textContent  || '').toLowerCase();
+    const desc = (card.querySelector('.product-desc')?.textContent || '').toLowerCase();
+    const match = name.includes(q) || cat.includes(q) || desc.includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) count++;
+  });
+
+  // Show "no results" message if nothing found
+  let noResultsEl = document.getElementById('shopNoResults');
+  if (!noResultsEl) {
+    noResultsEl = document.createElement('div');
+    noResultsEl.id = 'shopNoResults';
+    noResultsEl.style.cssText = 'text-align:center;padding:48px 20px;color:var(--text-soft);font-size:15px;width:100%;grid-column:1/-1;';
+    document.getElementById('shopGrid').appendChild(noResultsEl);
+  }
+  if (count === 0) {
+    noResultsEl.innerHTML = `<div style="font-size:32px;margin-bottom:12px;">🔍</div>
+      <div style="font-size:17px;font-weight:600;color:var(--text-dark);margin-bottom:8px;">No products found for "<em>${q}</em>"</div>
+      <div style="font-size:13px;">Try searching: skincare, makeup, haircare, serum, lipstick, shampoo…</div>`;
+    noResultsEl.style.display = 'block';
+  } else {
+    noResultsEl.style.display = 'none';
+  }
+
+  document.getElementById('shopCount').textContent = 'Showing ' + count + ' products';
+  document.getElementById('searchInput').value = '';
 }
 document.getElementById('searchOverlay').addEventListener('click', function(e) {
   if (e.target === this) toggleSearch();
@@ -2046,6 +2085,9 @@ function filterShop(btn, cat) {
     card.style.display = show ? '' : 'none';
     if (show) count++;
   });
+  // Hide no-results message when browsing categories
+  const noRes = document.getElementById('shopNoResults');
+  if (noRes) noRes.style.display = 'none';
   document.getElementById('shopCount').textContent = 'Showing ' + count + ' products';
 }
 function sortShop(val) {
